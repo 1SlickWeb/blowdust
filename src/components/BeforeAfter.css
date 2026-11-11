@@ -1,0 +1,275 @@
+.ba {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.ba--tile {
+  height: 100%;
+}
+
+/* ---------- stage: positioning root for frame + overlaid controls ---------- */
+
+.ba__stage {
+  position: relative;
+  border-radius: var(--radius);
+}
+
+.ba--tile .ba__stage {
+  height: 100%;
+}
+
+.ba__inview-sentinel {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ba__frame {
+  position: relative;
+  display: block;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.ba--card .ba__frame {
+  aspect-ratio: 4 / 3;
+}
+
+.ba--tile .ba__frame {
+  height: 100%;
+}
+
+.ba__stage:hover .ba__frame,
+.ba__stage:focus-within .ba__frame {
+  border-color: var(--color-accent);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  transform: translateY(-3px);
+}
+
+.ba__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-user-drag: none;
+}
+
+/* clip-path is set inline per-instance from React state; only animated (via
+   transition) during the one-time hint sweep — see .ba__stage--hinting. */
+.ba__after {
+  transition: none;
+}
+
+.ba__stage--hinting .ba__after {
+  transition: clip-path 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ba__overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  padding: 28px 46px 12px 14px; /* right padding clears the expand button */
+  font-size: 0.88rem;
+  color: var(--color-text);
+  background: linear-gradient(to top, rgba(23, 25, 26, 0.85), transparent);
+  pointer-events: none;
+}
+
+.ba__caption {
+  display: block;
+  padding: 12px 4px 0;
+  font-size: 0.92rem;
+  color: var(--color-text-dim);
+}
+
+/* ---------- before/after badges (fixed corners, always legible) ---------- */
+
+.ba__badge {
+  position: absolute;
+  top: 10px;
+  z-index: 2;
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-family: var(--font-heading);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+}
+
+.ba__badge--after {
+  left: 10px;
+  color: var(--color-accent);
+  background: rgba(23, 25, 26, 0.72);
+  border: 1px solid rgba(43, 175, 229, 0.5);
+}
+
+.ba__badge--before {
+  right: 10px;
+  color: rgba(253, 253, 253, 0.75);
+  background: rgba(23, 25, 26, 0.72);
+  border: 1px solid rgba(253, 253, 253, 0.22);
+}
+
+/* ---------- drag handle ---------- */
+
+.ba__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 44px;
+  margin-left: -22px; /* center the hit target on `left: pos%` */
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.ba__stage--hinting .ba__handle {
+  transition: left 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ba__handle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(253, 253, 253, 0.85);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+}
+
+.ba__handle-grip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(30px, 8vw, 36px);
+  height: clamp(30px, 8vw, 36px);
+  border-radius: 50%;
+  background: var(--color-text);
+  color: var(--color-base);
+  border: 1px solid rgba(23, 25, 26, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  transition: transform 0.18s ease;
+}
+
+.ba__handle:hover .ba__handle-grip,
+.ba__handle:focus-visible .ba__handle-grip {
+  transform: scale(1.08);
+}
+
+.ba__handle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 99px;
+}
+
+/* ---------- expand-to-lightbox button ---------- */
+
+.ba__expand {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(253, 253, 253, 0.25);
+  background: rgba(23, 25, 26, 0.72);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+}
+
+.ba__expand:hover,
+.ba__expand:focus-visible {
+  border-color: var(--color-accent);
+  background: var(--color-surface-2);
+  transform: scale(1.08);
+}
+
+/* 32px is an awkward tap on a phone, but growing the disc would crowd the
+   frame — widen the hit area with padding and pull the button back into the
+   corner so the visible disc stays put. */
+@media (pointer: coarse) {
+  .ba__expand {
+    width: 44px;
+    height: 44px;
+    border-color: transparent;
+    background: none;
+  }
+
+  .ba__expand::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    border: 1px solid rgba(253, 253, 253, 0.25);
+    background: rgba(23, 25, 26, 0.72);
+    z-index: -1;
+  }
+}
+
+/* ---------- placeholder disclosure ---------- */
+
+.ba__sample-tag {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(253, 253, 253, 0.55);
+  background: rgba(23, 25, 26, 0.6);
+  padding: 3px 8px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Tile cells (Gallery bento grid) are compact and already carry the title in
+   .ba__overlay along the same bottom edge — a second bottom-left tag there
+   collides with it, so skip it there. */
+.ba--tile .ba__sample-tag {
+  display: none;
+}
+
+/* Sub-11px labels don't survive outdoor glare on a phone (CLAUDE.md §6 — the
+   audience is in a yard or a truck cab). Floor these at 12px on mobile. */
+@media (max-width: 767px) {
+  .ba__badge {
+    font-size: 0.75rem;
+  }
+
+  .ba__sample-tag {
+    font-size: 0.72rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ba__frame,
+  .ba__handle-grip,
+  .ba__expand {
+    transition-duration: 0.01ms;
+  }
+
+  .ba__stage:hover .ba__frame,
+  .ba__stage:focus-within .ba__frame {
+    transform: none;
+  }
+}

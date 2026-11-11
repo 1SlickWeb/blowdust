@@ -1,0 +1,29 @@
+.about-story {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 44px;
+  align-items: start;
+}
+
+@media (max-width: 820px) {
+  .about-story {
+    grid-template-columns: 1fr;
+  }
+}
+
+.about-story p {
+  color: var(--color-text-dim);
+}
+
+.about-values {
+  gap: 16px;
+}
+
+.about-values .card p {
+  color: var(--color-text-dim);
+  margin: 0;
+}
+
+.about-values .card h3 {
+  font-size: 1rem;
+}

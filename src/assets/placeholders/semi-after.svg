@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Placeholder: semi truck after detailing">
+  <!-- PLACEHOLDER — replace with client's real AFTER photo -->
+  <defs>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2BAFE5" stop-opacity="0.25"/>
+      <stop offset="0.5" stop-color="#2BAFE5" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="#191c1e"/>
+  <rect y="470" width="800" height="130" fill="#121415"/>
+  <g fill="#0c0e0f" stroke="#2BAFE5" stroke-opacity="0.45" stroke-width="3">
+    <rect x="60" y="200" width="370" height="240" rx="8"/>
+    <rect x="430" y="400" width="260" height="40" rx="4"/>
+    <path d="M450 440 V280 q0 -22 22 -22 h80 q18 0 18 18 v164 z"/>
+    <path d="M574 440 v-96 q0 -16 16 -16 h56 q30 0 46 26 l16 26 q6 10 6 20 v40 z"/>
+  </g>
+  <rect x="60" y="200" width="370" height="240" rx="8" fill="url(#shine)"/>
+  <!-- sparkles -->
+  <g fill="#FDFDFD">
+    <path d="M180 240 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4 z"/>
+    <path d="M400 300 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 z"/>
+    <path d="M620 350 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 z" opacity="0.8"/>
+  </g>
+  <g fill="#0e1011" stroke="#3d454a" stroke-width="5">
+    <circle cx="130" cy="440" r="38"/>
+    <circle cx="225" cy="440" r="38"/>
+    <circle cx="480" cy="440" r="38"/>
+    <circle cx="655" cy="440" r="38"/>
+  </g>
+  <g fill="#4a5459">
+    <circle cx="130" cy="440" r="13"/>
+    <circle cx="225" cy="440" r="13"/>
+    <circle cx="480" cy="440" r="13"/>
+    <circle cx="655" cy="440" r="13"/>
+  </g>
+</svg>

@@ -1,0 +1,180 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(23, 25, 26, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+  transition: padding 0.25s ease;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-block: 14px;
+  transition: padding 0.25s ease;
+}
+
+.site-header--shrunk .site-header__inner {
+  padding-block: 6px;
+}
+
+.site-header__brand {
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+}
+
+.site-header__logo {
+  height: 54px;
+  width: auto;
+  transition: height 0.25s ease;
+}
+
+.site-header--shrunk .site-header__logo {
+  height: 40px;
+}
+
+.site-nav ul {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav a:not(.btn) {
+  display: block;
+  padding: 8px 12px;
+  color: var(--color-text-dim);
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 6px;
+}
+
+.site-nav a:not(.btn):hover {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+/* orange = active state (brand rule) */
+.site-nav a.active {
+  color: var(--color-cta);
+}
+
+/* shown inside the mobile drawer only; specificity must beat .btn-ghost */
+.site-nav a.site-nav__cta {
+  display: none;
+}
+
+.site-header__quote {
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.site-header__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.site-header__toggle-bar {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--color-text);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.site-header__toggle[aria-expanded='true'] .site-header__toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.site-header__toggle[aria-expanded='true'] .site-header__toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+.site-header__toggle[aria-expanded='true'] .site-header__toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 900px) {
+  .site-header__quote {
+    display: none;
+  }
+
+  .site-header__toggle {
+    display: flex;
+  }
+
+  /* The drawer is positioned ABSOLUTE, not fixed, on purpose: .site-header
+     carries backdrop-filter, which makes it the containing block for fixed
+     descendants. `position: fixed; inset: 0` therefore resolved against the
+     83px header rather than the viewport, collapsing the drawer's box to
+     ~112px — the opaque background painted only that far while the nav rows
+     spilled out over the page beneath it. Anchoring to the header instead is
+     honest about what the containing block actually is: `top: 100%` tracks
+     the shrink transition for free, and --header-h (measured in Header.jsx)
+     supplies the height to subtract. */
+  .site-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: calc(100dvh - var(--header-h, 69px));
+    background: var(--color-base);
+    padding: 24px 20px;
+    /* Landscape phones can't fit six rows plus the call CTA (~550px of
+       content in a 360px-tall window), so the drawer scrolls instead of
+       clipping "Contact" and the phone button off the bottom. */
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .site-nav--open {
+    display: flex;
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  .site-nav a:not(.btn) {
+    font-size: 1.15rem;
+    padding: 14px 8px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .site-nav a.site-nav__cta {
+    display: inline-flex;
+  }
+}
+
+/* Below 768px the fixed CTA bar (z-index 60) paints over the drawer, so the
+   drawer's last row needs to clear it. Only applies where that bar exists. */
+@media (max-width: 767px) {
+  .site-nav {
+    padding-bottom: calc(
+      24px + var(--cta-bar-height) + env(safe-area-inset-bottom, 0px)
+    );
+  }
+}

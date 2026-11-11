@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Window-tint price list.
+   Brand rules (CLAUDE.md §2): cyan carries the figures and the row links —
+   never a fill behind text; the one orange CTA sits at the foot of the block.
+   ========================================================================== */
+
+/* Two glows rather than one: this section is short and its rows only fill
+   the left half, so a single corner gradient anchored off the top edge (the
+   .packages treatment this borrows from) barely has room to bloom before it's
+   clipped — it read as almost nothing even at high opacity. Centring one glow
+   in the empty right column and pairing it with a dimmer counterweight
+   bottom-left fills that dead space and gives the section real presence
+   instead of reading as flatter than its neighbours (<PackageMenu />,
+   <SemiTruckPricing />) — pushed noticeably stronger than that shared
+   treatment (0.30 vs. their 0.07) specifically because this section is short
+   enough that a matching subtlety looked like almost nothing. A faint
+   diagonal wash under both keeps the base from going flat black between them,
+   without turning into a photo or pattern brand rules don't call for here. */
+.tint-pricing {
+  background:
+    radial-gradient(760px 640px at 86% 22%, rgba(43, 175, 229, 0.3), transparent 68%),
+    radial-gradient(600px 520px at 4% 96%, rgba(43, 175, 229, 0.14), transparent 70%),
+    linear-gradient(160deg, #14181b 0%, #0c0e0f 100%);
+  border-block: 1px solid var(--color-border);
+}
+
+.tint-pricing__lead {
+  margin-bottom: clamp(26px, 4vw, 38px);
+}
+
+.tint-pricing__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 720px;
+}
+
+.tint-pricing__row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tint-pricing__row:last-child {
+  border-bottom: 0;
+}
+
+.tint-pricing__name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  /* 44px tap row on touch without disturbing the baseline the leader aligns to */
+  min-height: 28px;
+}
+
+a.tint-pricing__name:hover,
+a.tint-pricing__name:focus-visible {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.tint-pricing__icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+a.tint-pricing__name:hover .tint-pricing__icon,
+a.tint-pricing__name:focus-visible .tint-pricing__icon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tint-pricing__leader {
+  flex: 1 1 auto;
+  border-bottom: 1px dashed rgba(253, 253, 253, 0.18);
+  transform: translateY(-4px);
+}
+
+.tint-pricing__price {
+  flex-shrink: 0;
+  font-family: var(--font-heading);
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.tint-pricing__unit {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-text-dim);
+}
+
+.tint-pricing__group {
+  margin-top: clamp(30px, 4vw, 44px);
+}
+
+.tint-pricing__group h3 {
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: rgba(253, 253, 253, 0.5);
+  margin-bottom: 6px;
+}
+
+.tint-pricing__list--addons .tint-pricing__price {
+  font-size: 1.02rem;
+}
+
+.tint-pricing__foot {
+  margin-top: clamp(30px, 4vw, 42px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.tint-pricing__disclaimer {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: rgba(253, 253, 253, 0.5);
+}
+
+@media (pointer: coarse) {
+  a.tint-pricing__name {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 620px) {
+  .tint-pricing__foot .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tint-pricing__icon {
+    transition-duration: 0.01ms;
+  }
+}

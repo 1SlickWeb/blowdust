@@ -1,0 +1,139 @@
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 11, 12, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.lightbox__panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  max-width: 1000px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 20px;
+}
+
+.lightbox__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.lightbox__title {
+  margin: 0;
+  font-size: 1rem;
+  margin-right: auto;
+}
+
+.lightbox__position {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  white-space: nowrap;
+}
+
+.lightbox__close {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.lightbox__close:hover {
+  border-color: var(--color-text);
+}
+
+.lightbox__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 640px) {
+  .lightbox__pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lightbox__pair figure {
+  margin: 0;
+}
+
+.lightbox__pair img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* ---------- single-photo mode (cab-interior wall) ---------- */
+
+.lightbox__single {
+  position: relative;
+}
+
+.lightbox__single img {
+  display: block;
+  width: 100%;
+  max-height: 74vh;
+  object-fit: contain;
+  border-radius: 8px;
+  background: var(--color-base);
+}
+
+.lightbox__nav {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  pointer-events: none;
+}
+
+.lightbox__step {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: rgba(23, 25, 26, 0.78);
+  color: var(--color-text);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.lightbox__step:hover:not(:disabled) {
+  border-color: var(--color-text);
+  background: rgba(23, 25, 26, 0.95);
+}
+
+.lightbox__step:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.lightbox__pair figcaption {
+  padding-top: 8px;
+  font-size: 0.9rem;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--font-heading);
+}

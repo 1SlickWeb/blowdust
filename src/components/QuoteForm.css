@@ -1,0 +1,32 @@
+.quote-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .quote-form__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.quote-form__submit {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.quote-form__success {
+  background: var(--color-surface);
+  border: 1px solid rgba(43, 175, 229, 0.4);
+  border-radius: var(--radius);
+  padding: 32px;
+}
+
+.quote-form__success h3 {
+  color: var(--color-accent);
+}
+
+.quote-form__success p {
+  margin: 0;
+  color: var(--color-text-dim);
+}

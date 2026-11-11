@@ -1,0 +1,391 @@
+/* ==========================================================================
+   Auto Detailing package menu.
+
+   Brand rules (CLAUDE.md §2) applied here:
+   - Dark-first: cards sit on --color-surface over the --color-base section.
+   - Cyan #2BAFE5 = identity only. It carries prices, bullets, section labels
+     and the featured badge outline — never a button fill, never on light.
+   - Orange #FD8000 = the one CTA at the foot of the section. Tier cards use
+     cyan text links so a single orange action stays dominant per screen.
+   ========================================================================== */
+
+.packages {
+  border-top: 1px solid var(--color-border);
+  background:
+    radial-gradient(900px 420px at 15% -5%, rgba(43, 175, 229, 0.07), transparent 62%),
+    var(--color-base);
+  scroll-margin-top: 90px;
+}
+
+.packages__lead {
+  margin-bottom: clamp(40px, 6vw, 64px);
+}
+
+/* ---------- group (Interior / Full / Add-ons) ---------- */
+
+.packages__group {
+  margin-bottom: clamp(48px, 7vw, 80px);
+  scroll-margin-top: 90px;
+}
+
+.packages__group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 28px;
+  padding-bottom: 18px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.packages__group-head h3 {
+  margin: 0;
+  flex-shrink: 0;
+  letter-spacing: 0.12em;
+}
+
+.packages__group-head p {
+  margin: 0;
+  flex: 1 1 320px;
+  color: var(--color-text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ---------- tier grid ---------- */
+
+.packages__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--pkg-cols, 3), minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* ---------- tier card ---------- */
+
+.pkg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 30px 26px 26px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.pkg:hover {
+  border-color: rgba(43, 175, 229, 0.45);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Top tier: cyan hairline + glow so it reads as the flagship without
+   borrowing the orange that belongs to actions. */
+.pkg--featured {
+  border-color: rgba(43, 175, 229, 0.5);
+  box-shadow: 0 0 0 1px rgba(43, 175, 229, 0.12),
+    0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.pkg__badge {
+  position: absolute;
+  top: 0;
+  left: 26px;
+  transform: translateY(-50%);
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: var(--color-base);
+  border: 1px solid rgba(43, 175, 229, 0.5);
+  color: var(--color-accent);
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pkg__name {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+}
+
+.pkg__tagline {
+  margin: 0 0 22px;
+  color: var(--color-text-dim);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+/* ---------- price ---------- */
+
+.pkg__price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pkg__price-label {
+  font-family: var(--font-heading);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(253, 253, 253, 0.45);
+}
+
+.pkg__price-value {
+  font-family: var(--font-heading);
+  font-size: clamp(1.9rem, 3.6vw, 2.3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--color-accent);
+}
+
+/* ---------- inclusion lists ---------- */
+
+/* Grows to fill the card so every CTA in a row lines up at the bottom. */
+.pkg__body {
+  flex: 1 1 auto;
+}
+
+.pkg__inherits {
+  margin: 0 0 16px;
+  color: var(--color-text);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.pkg__section + .pkg__section {
+  margin-top: 22px;
+}
+
+.pkg__section-label {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-heading);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(253, 253, 253, 0.45);
+}
+
+.pkg__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.pkg__list li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--color-text-dim);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.pkg__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 5px;
+  height: 5px;
+  background: var(--color-accent);
+}
+
+/* ---------- per-card action (cyan link, not a second orange button) ---------- */
+
+.pkg__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-accent);
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pkg__cta-icon {
+  width: 1em;
+  height: 1em;
+  transition: transform 0.18s ease;
+}
+
+.pkg__cta:hover .pkg__cta-icon,
+.pkg__cta:focus-visible .pkg__cta-icon {
+  transform: translateX(4px);
+}
+
+/* ---------- add-ons (menu-style leader rows) ---------- */
+
+.packages__addons {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 12px 26px;
+}
+
+.addons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 48px;
+}
+
+.addons__row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Two-column row flow: the final two items are the bottom of their respective
+   columns (whatever the total count), so they lose the rule. */
+.addons__row:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.addons__name {
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.addons__leader {
+  flex: 1 1 auto;
+  border-bottom: 1px dashed rgba(253, 253, 253, 0.18);
+  transform: translateY(-4px);
+}
+
+.addons__price {
+  flex-shrink: 0;
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+/* ---------- footer: disclaimer + the section's single orange CTA ---------- */
+
+.packages__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+
+.packages__disclaimer {
+  margin: 0;
+  flex: 1 1 380px;
+  color: rgba(253, 253, 253, 0.5);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1080px) {
+  .packages__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Two columns with an odd card count (Full Detailing has three) leaves an
+   orphan on the second row. Centre it instead of letting it hang off the
+   left edge. Scoped above the single-column breakpoint so it can't leak. */
+@media (min-width: 761px) and (max-width: 1080px) {
+  .packages__grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 760px) {
+  .packages__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .addons {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  /* Single column: only the true last row loses its rule. */
+  .addons__row:nth-last-child(-n + 2) {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .addons__row:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* Floor the small-caps labels at ~12px on phones — at 9.9–10.6px the price
+   label and tier badge were the least legible type on the site. */
+@media (max-width: 767px) {
+  .pkg__price-label,
+  .pkg__section-label,
+  .pkg__badge {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .pkg {
+    padding: 28px 20px 22px;
+  }
+
+  .packages__addons {
+    padding: 8px 20px;
+  }
+
+  .pkg__badge {
+    left: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pkg,
+  .pkg__cta-icon {
+    transition-duration: 0.01ms;
+  }
+
+  .pkg:hover {
+    transform: none;
+  }
+
+  .pkg__cta:hover .pkg__cta-icon,
+  .pkg__cta:focus-visible .pkg__cta-icon {
+    transform: none;
+  }
+}
+
+/* Coating tiers carry no figure, so the value slot holds words rather than a
+   price. Scaled down from the 2.3rem numeral, which "On quote" would tower at. */
+.pkg__price--quoted .pkg__price-value {
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

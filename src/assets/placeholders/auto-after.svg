@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Placeholder: car after detailing">
+  <!-- PLACEHOLDER — replace with client's real AFTER photo -->
+  <defs>
+    <linearGradient id="shineA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2BAFE5" stop-opacity="0.28"/>
+      <stop offset="0.55" stop-color="#2BAFE5" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="#191c1e"/>
+  <rect y="470" width="800" height="130" fill="#121415"/>
+  <g fill="#0c0e0f" stroke="#2BAFE5" stroke-opacity="0.45" stroke-width="3">
+    <path d="M110 440 v-50 q0 -34 40 -40 q30 -60 120 -66 q120 -8 170 44 q90 8 130 30 q44 12 48 52 v30 q0 12 -12 12 h-484 q-12 0 -12 -12 z"/>
+  </g>
+  <path d="M110 440 v-50 q0 -34 40 -40 q30 -60 120 -66 q120 -8 170 44 q90 8 130 30 q44 12 48 52 v30 q0 12 -12 12 h-484 q-12 0 -12 -12 z" fill="url(#shineA)"/>
+  <path d="M280 300 q40 -36 110 -32 l30 44 h-160 z" fill="#22303a"/>
+  <g fill="#FDFDFD">
+    <path d="M200 320 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4 z"/>
+    <path d="M480 340 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 z"/>
+  </g>
+  <g fill="#0e1011" stroke="#3d454a" stroke-width="5">
+    <circle cx="230" cy="445" r="40"/>
+    <circle cx="530" cy="445" r="40"/>
+  </g>
+  <g fill="#4a5459">
+    <circle cx="230" cy="445" r="14"/>
+    <circle cx="530" cy="445" r="14"/>
+  </g>
+</svg>

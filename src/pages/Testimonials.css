@@ -1,0 +1,169 @@
+/* ---------- rating summary (dark page hero) ---------- */
+
+.tm-score {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-top: 30px;
+}
+
+.tm-score__value {
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+/* Cyan, not orange — this is identity, not an action (CLAUDE.md §2). */
+.tm-score__stars {
+  color: var(--color-accent);
+  letter-spacing: 3px;
+  font-size: 1.15rem;
+}
+
+.tm-score__count {
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(253, 253, 253, 0.55);
+}
+
+/* ---------- light "every review" block ---------- */
+
+.tm-full-head {
+  margin-bottom: 34px;
+}
+
+.tm-full-head p {
+  margin: 0;
+  color: var(--color-light-dim);
+  font-size: 0.95rem;
+}
+
+.review-card {
+  margin: 0;
+  background: #fff;
+  border: 1px solid rgba(23, 25, 26, 0.12);
+  border-radius: var(--radius);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.review-card .stars {
+  color: var(--color-light-text);
+  letter-spacing: 4px;
+  font-size: 1.05rem;
+}
+
+.review-card p {
+  margin: 0;
+  color: var(--color-light-text);
+  font-size: 1.02rem;
+}
+
+/* Quotes vary a lot in length; push the attribution to the card's foot so
+   names line up across a row. */
+.review-card p {
+  flex-grow: 1;
+}
+
+.review-card footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.9rem;
+  color: var(--color-light-dim);
+}
+
+.review-card footer strong {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--color-light-text);
+}
+
+/* Dark-on-light only — neither brand accent clears contrast on white. */
+.review-card__badge {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-light-dim);
+  border: 1px solid rgba(23, 25, 26, 0.22);
+  border-radius: 100px;
+  padding: 3px 9px;
+}
+
+@media (max-width: 767px) {
+  .review-card__badge {
+    font-size: 0.72rem;
+  }
+}
+
+/* ---------- scrolling review marquee (dark band) ---------- */
+
+.testimonials-marquee {
+  overflow: hidden;
+}
+
+.testimonials-marquee__rows {
+  position: relative;
+  margin-top: 34px;
+}
+
+/* Monogram avatar — cyan (identity accent), never orange. */
+.tm-avatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(43, 175, 229, 0.12);
+  border: 1px solid rgba(43, 175, 229, 0.5);
+  color: var(--color-accent);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+}
+
+.tm-stars {
+  color: var(--color-accent);
+  letter-spacing: 3px;
+  font-size: 0.9rem;
+}
+
+/* Edge fades so cards slide in/out of view instead of hard-clipping. */
+.testimonials-marquee__fade {
+  position: absolute;
+  inset-block: 0;
+  width: 12%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.testimonials-marquee__fade--l {
+  left: 0;
+  background: linear-gradient(to right, var(--color-base), transparent);
+}
+
+.testimonials-marquee__fade--r {
+  right: 0;
+  background: linear-gradient(to left, var(--color-base), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-marquee .animate-marquee,
+  .testimonials-marquee .animate-marquee-vertical {
+    animation: none;
+  }
+}

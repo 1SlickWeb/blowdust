@@ -1,0 +1,251 @@
+/* ==========================================================================
+   Photo-led service cards (home overview).
+   Brand rules (CLAUDE.md §2): the titles and arrows are white on a darkened
+   photo — no orange here, so the page keeps a single orange CTA. Cyan carries
+   the corner tag, and sits on its own dark pill so it is never rendered on a
+   light patch of photograph.
+   ========================================================================== */
+
+/* Six columns, not three: the three core services each span 2 (equal thirds,
+   same as before), and the two featured package tiers (Paint Correction,
+   Ceramic Coating — see HOME_CARDS in ServiceCards.jsx) each span 3, giving
+   them their own full-width row of two equal halves underneath rather than
+   an odd trailing pair dangling under a 3-up grid built for five. */
+.svc-cards {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+.svc-card {
+  display: flex;
+  grid-column: span 2;
+}
+
+.svc-card--wide {
+  grid-column: span 3;
+}
+
+/* Aspect ratio is tuned per band rather than left at one value: three-up the
+   cards want to be square, but a single full-width card at the same ratio is
+   ~690px tall on a tablet, and 4/3 three-up on a small laptop leaves a squat
+   205px tile that the title and arrow nearly fill on their own. */
+.svc-card__link {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+  /* Notch cut from the bottom-right corner. */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 42px),
+    calc(100% - 42px) 100%,
+    0 100%
+  );
+}
+
+.svc-card__link:hover,
+.svc-card__link:focus-visible {
+  text-decoration: none;
+}
+
+.svc-card__media {
+  position: absolute;
+  inset: 0;
+}
+
+.svc-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scrim for the title. Weighted to the bottom so the photograph stays legible
+   through the top two-thirds of the card. */
+.svc-card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 11, 12, 0.92) 0%,
+    rgba(10, 11, 12, 0.58) 38%,
+    rgba(10, 11, 12, 0.14) 72%,
+    rgba(10, 11, 12, 0.04) 100%
+  );
+}
+
+/* Window tinting has no photograph of its own yet, so it falls back to the
+   <TintCar /> illustration, sized to show the whole car — nose to tail —
+   rather than cropping in on the glass. Left vertically centred (not
+   bottom-anchored): the car is much shorter than the card is tall once it's
+   not being cropped for width (see the width comment below), so centring
+   leaves clear, empty background at the bottom for the title/arrow — anchor
+   it to the bottom instead and the wheels sit directly under the text.
+   TODO(client): swap for a real tinted-glass shot when one arrives. */
+.svc-card__art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Pitched dark enough to sit at the same value as the two photographs —
+     a lighter panel here makes the row look like two cards and a gap. */
+  background: radial-gradient(115% 85% at 50% 30%, #1b2024, #090a0b 76%);
+}
+
+/* Declared here rather than leaning on TintSimulator.css, so the card does not
+   depend on a stylesheet its page never imports.
+   Width is worked out from the SVG's own geometry, not eyeballed: the drawn
+   car (bumper to bumper, including wheels/lamps) spans viewBox x=128..1124 of
+   a 1200-wide, 500-tall canvas — the rest is ambient glow/shadow margin, not
+   car. Centring that 1200-wide canvas and scaling it up crops symmetrically
+   from both sides, so the tighter margin (1200-1124=76px, the tail side)
+   is what limits how far it can scale before the tail itself gets cut —
+   at >114.5% the tail starts disappearing. 112% keeps a hair of headroom
+   under that so rounding/anti-aliasing can't nick it, while still filling
+   most of the card's width. Do the math again before changing this number;
+   it is not a value that can be eyeballed back to "looks about right". */
+.svc-card__art .tint-car {
+  display: block;
+  flex: none;
+  width: 112%;
+  max-width: none;
+  height: auto;
+}
+
+.svc-card__body {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 24px 26px 26px;
+}
+
+.svc-card__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.svc-card__arrow {
+  width: 48px;
+  height: 26px;
+  stroke-width: 1.5;
+  color: var(--color-text);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc-card__link:hover .svc-card__arrow,
+.svc-card__link:focus-visible .svc-card__arrow {
+  transform: translateX(9px);
+}
+
+.svc-card__link:hover .svc-card__media img {
+  transform: scale(1.06);
+}
+
+.svc-card__tag {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 1;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: rgba(10, 11, 12, 0.62);
+  border: 1px solid rgba(43, 175, 229, 0.45);
+  border-radius: 99px;
+  padding: 5px 12px;
+}
+
+/* clip-path clips an outline, so the focus ring is drawn inset instead — the
+   default outline would be sliced off at the notched corner. */
+.svc-card__link:focus-visible {
+  outline: none;
+}
+
+.svc-card__link:focus-visible .svc-card__body::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 2px solid var(--color-accent);
+  pointer-events: none;
+}
+
+/* A wide card is 1.5x a core card's width (span 3 of 6 vs. span 2 of 6).
+   Left at aspect-ratio: 1/1 that would make it 1.5x as TALL too, so its row
+   wouldn't line up with the core row above it — 3/2 keeps both rows the same
+   height. Scoped to the width the 6-column grid is actually active at; below
+   that both breakpoints share one aspect-ratio for every card regardless of
+   width (see the max-width: 900px block), so this must not leak down into
+   them — a compound selector like `.svc-card--wide .svc-card__link` outranks
+   the plain `.svc-card__link` used there regardless of media-query order. */
+@media (min-width: 901px) {
+  .svc-card--wide .svc-card__link {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+/* Stacked: wide banner cards, so one card doesn't swallow a tablet screen. */
+@media (max-width: 900px) {
+  .svc-cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* The 6-column spans only mean something in the multi-column grid above —
+     left in place here, `span 2`/`span 3` on a 1-column grid forces extra
+     implicit columns and breaks the single-column stack. */
+  .svc-card,
+  .svc-card--wide {
+    grid-column: span 1;
+  }
+
+  .svc-card__link {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* On a phone the card is the whole screen width, so it can afford to be tall
+   and photographic again. */
+@media (max-width: 620px) {
+  .svc-card__link {
+    aspect-ratio: 5 / 4;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - 32px),
+      calc(100% - 32px) 100%,
+      0 100%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-card__media img,
+  .svc-card__arrow {
+    transition-duration: 0.01ms;
+  }
+
+  .svc-card__link:hover .svc-card__media img {
+    transform: none;
+  }
+}

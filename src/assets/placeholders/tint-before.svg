@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Placeholder: car windows before tinting">
+  <!-- PLACEHOLDER — replace with client's real BEFORE photo -->
+  <rect width="800" height="600" fill="#1c1e20"/>
+  <rect y="470" width="800" height="130" fill="#141617"/>
+  <!-- door panel -->
+  <rect x="120" y="140" width="560" height="330" rx="14" fill="#191c1d" stroke="#3a3f42" stroke-width="3"/>
+  <!-- clear window with sun glare -->
+  <path d="M160 180 h360 q40 0 60 34 l60 96 h-480 z" fill="#8fa6b3" fill-opacity="0.5"/>
+  <g stroke="#f5d98d" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round">
+    <line x1="560" y1="150" x2="480" y2="250"/>
+    <line x1="610" y1="170" x2="540" y2="260"/>
+    <line x1="650" y1="200" x2="590" y2="275"/>
+  </g>
+  <rect x="160" y="340" width="480" height="18" rx="6" fill="#101213"/>
+</svg>
